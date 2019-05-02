@@ -42,5 +42,8 @@ defmodule InfkeeperWeb.Endpoint do
     key: "_infkeeper_key",
     signing_salt: "I3lJnOTE"
 
+  plug Corsica,
+    origins: ["http://localhost:4000", "https://rapid-separate-bullfrog.gigalixirapp.com"],
+    log: [rejected: :error, invalid: :warn, accepted: :debug]
   plug InfkeeperWeb.Router
 end

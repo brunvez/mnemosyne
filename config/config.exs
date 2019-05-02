@@ -17,6 +17,10 @@ config :infkeeper, InfkeeperWeb.Endpoint,
   render_errors: [view: InfkeeperWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Infkeeper.PubSub, adapter: Phoenix.PubSub.PG2]
 
+config :infkeeper, Infkeeper.Authentication.Guardian,
+       issuer: "infkeeper",
+       secret_key: "UxcfQ+WjQQkeoIshdks2zoXz4T2qgdGSoOtDmxJ2m9bZUtYJ49IutxX3H38SmQ6n"
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
