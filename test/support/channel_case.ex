@@ -15,7 +15,7 @@ defmodule InfkeeperWeb.ChannelCase do
 
   use ExUnit.CaseTemplate
   alias Ecto.Adapters.SQL.Sandbox, as: DatabaseAdapter
-  
+
   using do
     quote do
       # Import conveniences for testing with channels
