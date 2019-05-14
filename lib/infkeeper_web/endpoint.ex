@@ -45,5 +45,6 @@ defmodule InfkeeperWeb.Endpoint do
   plug Corsica,
     origins: ["http://localhost:4000", "https://rapid-separate-bullfrog.gigalixirapp.com"],
     log: [rejected: :error, invalid: :warn, accepted: :debug]
+
   plug InfkeeperWeb.Router
 end

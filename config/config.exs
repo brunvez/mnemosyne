@@ -18,8 +18,8 @@ config :infkeeper, InfkeeperWeb.Endpoint,
   pubsub: [name: Infkeeper.PubSub, adapter: Phoenix.PubSub.PG2]
 
 config :infkeeper, Infkeeper.Authentication.Guardian,
-       issuer: "infkeeper",
-       secret_key: "UxcfQ+WjQQkeoIshdks2zoXz4T2qgdGSoOtDmxJ2m9bZUtYJ49IutxX3H38SmQ6n"
+  issuer: "infkeeper",
+  secret_key: "UxcfQ+WjQQkeoIshdks2zoXz4T2qgdGSoOtDmxJ2m9bZUtYJ49IutxX3H38SmQ6n"
 
 # Configures Elixir's Logger
 config :logger, :console,

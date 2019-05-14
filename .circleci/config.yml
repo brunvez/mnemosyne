@@ -52,5 +52,7 @@ jobs:
 
       - run: mix test
 
+      - run: mix credo list --strict
+
       - store_test_results:
           path: _build/test/lib/infkeeper
