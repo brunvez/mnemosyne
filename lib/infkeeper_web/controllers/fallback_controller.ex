@@ -23,6 +23,6 @@ defmodule InfkeeperWeb.FallbackController do
   def call(conn, {:error, :unauthorized}) do
     conn
     |> put_status(:unauthorized)
-    |> json(%{errors: "Invalid username or password"})
+    |> json(%{errors: "Invalid email or password"})
   end
 end

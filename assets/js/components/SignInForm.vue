@@ -15,7 +15,7 @@
       </label>
       
       <div class="actions">
-        <button class="button button-black" @click="submit()">Submit</button>
+        <button class="button button--black" @click="submit()">Submit</button>
         <span>Don't have an account? <router-link v-bind:to="signUpPath">Sign up</router-link></span>
       </div>
   </div>

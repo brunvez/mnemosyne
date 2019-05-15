@@ -14,6 +14,8 @@ defmodule Infkeeper.DataCase do
 
   use ExUnit.CaseTemplate
 
+  alias Ecto.Adapters.SQL.Sandbox, as: DatabaseAdapter
+
   using do
     quote do
       alias Infkeeper.Repo
@@ -26,10 +28,10 @@ defmodule Infkeeper.DataCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Infkeeper.Repo)
+    :ok = DatabaseAdapter.checkout(Infkeeper.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Infkeeper.Repo, {:shared, self()})
+      DatabaseAdapter.mode(Infkeeper.Repo, {:shared, self()})
     end
 
     :ok

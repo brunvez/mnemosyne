@@ -15,6 +15,10 @@ defmodule InfkeeperWeb.ConnCase do
 
   use ExUnit.CaseTemplate
 
+  alias Ecto.Adapters.SQL.Sandbox, as: DatabaseAdapter
+  alias Infkeeper.Authentication.Guardian.Plug, as: AuthenticationPlug
+  alias Infkeeper.UserFactory
+
   using do
     quote do
       # Import conveniences for testing with connections
@@ -27,12 +31,24 @@ defmodule InfkeeperWeb.ConnCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Infkeeper.Repo)
+    :ok = DatabaseAdapter.checkout(Infkeeper.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Infkeeper.Repo, {:shared, self()})
+      DatabaseAdapter.mode(Infkeeper.Repo, {:shared, self()})
     end
 
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
+    conn = Phoenix.ConnTest.build_conn()
+
+    if tags[:browser_authenticated] do
+      authenticate_user_on_session(conn)
+    else
+      {:ok, conn: conn}
+    end
+  end
+
+  defp authenticate_user_on_session(conn) do
+    user = UserFactory.create(:user)
+    conn = AuthenticationPlug.sign_in(conn, user)
+    {:ok, conn: conn, user: user}
   end
 end

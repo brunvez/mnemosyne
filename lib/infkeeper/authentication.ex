@@ -1,9 +1,13 @@
 defmodule Infkeeper.Authentication do
+  @moduledoc """
+  Validates a login against an account and
+  creates tokens to validate authentication
+  """
+
   import Ecto.Query, warn: false
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
-  
-  alias Infkeeper.Repo
-  alias Infkeeper.Accounts.User
+
+  alias Infkeeper.Accounts
   alias Infkeeper.Authentication.Guardian
 
   def get_user_by_token(token), do: Guardian.resource_from_token(token)
@@ -15,23 +19,24 @@ defmodule Infkeeper.Authentication do
     end
   end
 
-  defp authenticate_user_by_email_and_password(email, password) do
+  def authenticate_user_by_email_and_password(email, password) do
     with {:ok, user} <- get_user_by_email(email) do
       verify_password(password, user)
     end
   end
 
   defp get_user_by_email(email) do
-    case Repo.get_by(User, email: email) do
+    case Accounts.get_user_by_email(email) do
       nil ->
         dummy_checkpw()
         {:error, :not_found}
+
       user ->
         {:ok, user}
     end
   end
 
-   defp verify_password(password, %User{} = user) do
+  defp verify_password(password, user) do
     if checkpw(password, user.password_hash) do
       {:ok, user}
     else

@@ -6,11 +6,11 @@ import App from './App.vue';
 import router from 'Router';
 import store from 'Store'
 
-alertify.set('notifier','position', 'top-right');
-Vue.prototype.$alert = alertify;
+// alertify.set('notifier','position', 'top-right');
+// Vue.prototype.$alert = alertify;
 
-new Vue({
-  router,
-  store,
-  render: h => h(App),
-}).$mount('#app');
+// new Vue({
+//   router,
+//   store,
+//   render: h => h(App),
+// }).$mount('#app');

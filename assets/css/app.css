@@ -1,6 +1,7 @@
 /* This file is for your main application css. */
 
 @import "./base.css";
+@import "./buttons.css";
 @import "./colors.css";
 @import "./forms.css";
 
@@ -8,12 +9,3 @@ body {
   color: var(--text-color);
 }
 
-.button-black {
-  background-color: rgba(0, 0 , 0, 0.8);
-  border-color: black;
-}
-
-.button-black:hover {
-  background-color: black;
-  border-color: black;
-}

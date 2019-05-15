@@ -1,4 +1,8 @@
-defmodule InfkeeperWeb.Authentication.ErrorHandler do
+defmodule InfkeeperWeb.Authentication.ApiErrorHandler do
+  @moduledoc """
+  Handles errors related to authentication responding
+  as a JSON API
+  """
   import Plug.Conn
 
   @behaviour Guardian.Plug.ErrorHandler

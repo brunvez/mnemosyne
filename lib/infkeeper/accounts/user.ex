@@ -27,13 +27,13 @@ defmodule Infkeeper.Accounts.User do
     |> put_password_hash
   end
 
-   defp put_password_hash(changeset) do
+  defp put_password_hash(changeset) do
     case changeset do
-      %Ecto.Changeset{valid?: true, changes: %{password: pass}}
-        ->
-          put_change(changeset, :password_hash, hashpwsalt(pass))
+      %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
+        put_change(changeset, :password_hash, hashpwsalt(pass))
+
       _ ->
-          changeset
+        changeset
     end
   end
 end

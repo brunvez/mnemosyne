@@ -1,11 +1,12 @@
 defmodule InfkeeperWeb.AuthenticationPipeline do
+  @moduledoc """
+  Verifies whether a request is authenticated or not 
+  """
   use Guardian.Plug.Pipeline,
-    otp_app: :messaging,
-    module: Infkeeper.Authentication.Guardian,
-    error_handler: MessagingWeb.Authentication.ErrorHandler
+    otp_app: :infkeeper,
+    module: Infkeeper.Authentication.Guardian
 
   plug Guardian.Plug.VerifyHeader, realm: "Bearer"
-  plug Guardian.Plug.EnsureAuthenticated
-  plug Guardian.Plug.LoadResource
-  plug InfkeeperWeb.Authentication.SetCurrentUser
+  plug Guardian.Plug.VerifySession
+  plug Guardian.Plug.LoadResource, allow_blank: true
 end
