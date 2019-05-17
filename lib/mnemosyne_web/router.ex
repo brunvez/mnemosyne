@@ -63,6 +63,7 @@ defmodule MnemosyneWeb.Router do
 
       get "/", PageController, :index, as: :root
       resources "/session", SessionController, singleton: true, only: [:delete]
+      resources "/memories", MemoryController
     end
   end
 end

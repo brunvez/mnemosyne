@@ -1,0 +1,28 @@
+<h1>Listing Memories</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for memory <- @memories do %>
+    <tr>
+      <td><%= memory.title %></td>
+      <td><%= memory.description %></td>
+
+      <td>
+        <%= link "Show", to: Routes.memory_path(@conn, :show, memory) %>
+        <%= link "Edit", to: Routes.memory_path(@conn, :edit, memory) %>
+        <%= link "Delete", to: Routes.memory_path(@conn, :delete, memory), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Memory", to: Routes.memory_path(@conn, :new) %></span>
