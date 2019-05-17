@@ -1,4 +1,4 @@
-# Infkeeper
+# Mnemosyne
 
 To start your Phoenix server:
 

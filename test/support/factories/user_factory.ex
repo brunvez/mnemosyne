@@ -1,8 +1,8 @@
-defmodule Infkeeper.UserFactory do
+defmodule Mnemosyne.UserFactory do
   @moduledoc """
   Creates users for their use in tests
   """
-  alias Infkeeper.Accounts
+  alias Mnemosyne.Accounts
 
   @default_attributes %{
     email: "some@email.com",

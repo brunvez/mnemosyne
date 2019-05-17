@@ -1,4 +1,4 @@
-defmodule Infkeeper.Repo.Migrations.CreateUsers do
+defmodule Mnemosyne.Repo.Migrations.CreateUsers do
   use Ecto.Migration
 
   def change do

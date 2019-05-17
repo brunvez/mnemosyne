@@ -1,4 +1,4 @@
-defmodule InfkeeperWeb.ConnCase do
+defmodule MnemosyneWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -16,25 +16,25 @@ defmodule InfkeeperWeb.ConnCase do
   use ExUnit.CaseTemplate
 
   alias Ecto.Adapters.SQL.Sandbox, as: DatabaseAdapter
-  alias Infkeeper.Authentication.Guardian.Plug, as: AuthenticationPlug
-  alias Infkeeper.UserFactory
+  alias Mnemosyne.Authentication.Guardian.Plug, as: AuthenticationPlug
+  alias Mnemosyne.UserFactory
 
   using do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
-      alias InfkeeperWeb.Router.Helpers, as: Routes
+      alias MnemosyneWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
-      @endpoint InfkeeperWeb.Endpoint
+      @endpoint MnemosyneWeb.Endpoint
     end
   end
 
   setup tags do
-    :ok = DatabaseAdapter.checkout(Infkeeper.Repo)
+    :ok = DatabaseAdapter.checkout(Mnemosyne.Repo)
 
     unless tags[:async] do
-      DatabaseAdapter.mode(Infkeeper.Repo, {:shared, self()})
+      DatabaseAdapter.mode(Mnemosyne.Repo, {:shared, self()})
     end
 
     conn = Phoenix.ConnTest.build_conn()
