@@ -46,8 +46,8 @@ end
 # when running `mix release`, the first release in the file
 # will be used by default
 
-release :infkeeper do
-  set version: current_version(:infkeeper)
+release :mnemosyne do
+  set version: current_version(:mnemosyne)
   set applications: [
     :runtime_tools
   ]

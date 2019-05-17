@@ -1,4 +1,4 @@
-defmodule InfkeeperWeb.ChannelCase do
+defmodule MnemosyneWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -22,15 +22,15 @@ defmodule InfkeeperWeb.ChannelCase do
       use Phoenix.ChannelTest
 
       # The default endpoint for testing
-      @endpoint InfkeeperWeb.Endpoint
+      @endpoint MnemosyneWeb.Endpoint
     end
   end
 
   setup tags do
-    :ok = DatabaseAdapter.checkout(Infkeeper.Repo)
+    :ok = DatabaseAdapter.checkout(Mnemosyne.Repo)
 
     unless tags[:async] do
-      DatabaseAdapter.mode(Infkeeper.Repo, {:shared, self()})
+      DatabaseAdapter.mode(Mnemosyne.Repo, {:shared, self()})
     end
 
     :ok

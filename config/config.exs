@@ -7,18 +7,18 @@
 # General application configuration
 use Mix.Config
 
-config :infkeeper,
-  ecto_repos: [Infkeeper.Repo]
+config :mnemosyne,
+  ecto_repos: [Mnemosyne.Repo]
 
 # Configures the endpoint
-config :infkeeper, InfkeeperWeb.Endpoint,
+config :mnemosyne, MnemosyneWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "QZDeYd2HIzUFCuFGAgRWW6lkcDq6qNtDHX5tT9W3TBwna9TrmHU62Qn3uSzzoO6Y",
-  render_errors: [view: InfkeeperWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Infkeeper.PubSub, adapter: Phoenix.PubSub.PG2]
+  render_errors: [view: MnemosyneWeb.ErrorView, accepts: ~w(html json)],
+  pubsub: [name: Mnemosyne.PubSub, adapter: Phoenix.PubSub.PG2]
 
-config :infkeeper, Infkeeper.Authentication.Guardian,
-  issuer: "infkeeper",
+config :mnemosyne, Mnemosyne.Authentication.Guardian,
+  issuer: "mnemosyne",
   secret_key: "UxcfQ+WjQQkeoIshdks2zoXz4T2qgdGSoOtDmxJ2m9bZUtYJ49IutxX3H38SmQ6n"
 
 # Configures Elixir's Logger

@@ -1,9 +1,9 @@
-defmodule Infkeeper.MixProject do
+defmodule Mnemosyne.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :infkeeper,
+      app: :mnemosyne,
       version: "0.1.0",
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -19,7 +19,7 @@ defmodule Infkeeper.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Infkeeper.Application, []},
+      mod: {Mnemosyne.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end

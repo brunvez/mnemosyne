@@ -9,10 +9,10 @@ jobs:
       - image: circleci/postgres:10.1-alpine  # database image
         environment:  # environment variables for database
           POSTGRES_USER: postgres
-          POSTGRES_DB: infkeeper_test
+          POSTGRES_DB: mnemosyne_test
           POSTGRES_PASSWORD: postgres
 
-    working_directory: ~/infkeeper
+    working_directory: ~/mnemosyne
 
     steps:
       - checkout
@@ -55,4 +55,4 @@ jobs:
       - run: mix credo list --strict
 
       - store_test_results:
-          path: _build/test/lib/infkeeper
+          path: _build/test/lib/mnemosyne

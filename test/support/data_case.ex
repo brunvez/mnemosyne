@@ -1,4 +1,4 @@
-defmodule Infkeeper.DataCase do
+defmodule Mnemosyne.DataCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -18,20 +18,20 @@ defmodule Infkeeper.DataCase do
 
   using do
     quote do
-      alias Infkeeper.Repo
+      alias Mnemosyne.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import Infkeeper.DataCase
+      import Mnemosyne.DataCase
     end
   end
 
   setup tags do
-    :ok = DatabaseAdapter.checkout(Infkeeper.Repo)
+    :ok = DatabaseAdapter.checkout(Mnemosyne.Repo)
 
     unless tags[:async] do
-      DatabaseAdapter.mode(Infkeeper.Repo, {:shared, self()})
+      DatabaseAdapter.mode(Mnemosyne.Repo, {:shared, self()})
     end
 
     :ok
