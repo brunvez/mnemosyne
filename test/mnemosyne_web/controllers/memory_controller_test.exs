@@ -75,6 +75,7 @@ defmodule MnemosyneWeb.MemoryControllerTest do
     test "deletes chosen memory", %{conn: conn, memory: memory} do
       conn = delete(conn, Routes.memory_path(conn, :delete, memory))
       assert redirected_to(conn) == Routes.memory_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.memory_path(conn, :show, memory))
       end

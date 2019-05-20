@@ -15,4 +15,4 @@
 </ul>
 
 <span><%= link "Edit", to: Routes.memory_path(@conn, :edit, @memory) %></span>
-<span><%= link "Back", to: Routes.memory_path(@conn, :index) %></span>
+<span><%= link "Back", to: Routes.root_path(@conn, :index) %></span>

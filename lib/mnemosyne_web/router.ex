@@ -61,9 +61,9 @@ defmodule MnemosyneWeb.Router do
     scope "/" do
       pipe_through :ensure_browser_authenticated
 
-      get "/", PageController, :index, as: :root
+      get "/", MemoryController, :index, as: :root
       resources "/session", SessionController, singleton: true, only: [:delete]
-      resources "/memories", MemoryController
+      resources "/memories", MemoryController, except: [:index]
     end
   end
 end

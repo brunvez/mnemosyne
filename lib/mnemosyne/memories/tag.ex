@@ -1,10 +1,10 @@
 defmodule Mnemosyne.Memories.Tag do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Mnemosyne.Memories.Memory
 
   schema "tags" do
     field :name, :string
-    field :memory_id, :id
 
     timestamps()
   end

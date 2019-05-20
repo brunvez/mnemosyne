@@ -5,7 +5,7 @@ defmodule MnemosyneWeb.MemoryController do
   alias Mnemosyne.Memories.Memory
 
   def index(conn, _params) do
-    memories = Memories.list_memories()
+    memories = Memories.list_memories(current_user(conn))
     render(conn, "index.html", memories: memories)
   end
 
@@ -15,13 +15,14 @@ defmodule MnemosyneWeb.MemoryController do
   end
 
   def create(conn, %{"memory" => memory_params}) do
-    case Memories.create_memory(memory_params) do
+    case Memories.create_memory(current_user(conn), memory_params) do
       {:ok, memory} ->
         conn
         |> put_flash(:info, "Memory created successfully.")
         |> redirect(to: Routes.memory_path(conn, :show, memory))
 
       {:error, %Ecto.Changeset{} = changeset} ->
+        IO.inspect(changeset)
         render(conn, "new.html", changeset: changeset)
     end
   end
@@ -57,6 +58,6 @@ defmodule MnemosyneWeb.MemoryController do
 
     conn
     |> put_flash(:info, "Memory deleted successfully.")
-    |> redirect(to: Routes.memory_path(conn, :index))
+    |> redirect(to: Routes.root_path(conn, :index))
   end
 end

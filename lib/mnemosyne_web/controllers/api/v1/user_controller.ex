@@ -25,8 +25,4 @@ defmodule MnemosyneWeb.Api.V1.UserController do
       render(conn, "show.json", user: user)
     end
   end
-
-  defp current_user(conn) do
-    conn.assigns.current_user
-  end
 end
