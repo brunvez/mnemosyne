@@ -1,7 +1,7 @@
 defmodule Mnemosyne.Memories.Tag do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
-  alias Mnemosyne.Memories.Memory
 
   schema "tags" do
     field :name, :string

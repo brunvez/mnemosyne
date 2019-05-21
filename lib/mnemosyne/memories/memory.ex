@@ -1,12 +1,13 @@
 defmodule Mnemosyne.Memories.Memory do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
   alias Mnemosyne.Accounts.User
   alias Mnemosyne.Memories.Tag
 
   schema "memories" do
-    field :description, :string
     field :title, :string
+    field :description, :string
     belongs_to :user, User
 
     many_to_many :tags, Tag,

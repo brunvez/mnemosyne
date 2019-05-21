@@ -12,6 +12,11 @@
     <%= @memory.description %>
   </li>
 
+  <li>
+    <strong>Tags:</strong>
+    <%= enumerate_tags(@memory.tags) %>
+  </li>
+
 </ul>
 
 <span><%= link "Edit", to: Routes.memory_path(@conn, :edit, @memory) %></span>

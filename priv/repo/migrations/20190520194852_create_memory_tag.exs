@@ -5,8 +5,6 @@ defmodule Mnemosyne.Repo.Migrations.CreateMemoryTag do
     create table(:memories_tags) do
       add :memory_id, references(:memories, on_delete: :delete_all), null: false
       add :tag_id, references(:tags, on_delete: :delete_all), null: false
-
-      timestamps()
     end
 
     create index(:memories_tags, [:memory_id])
