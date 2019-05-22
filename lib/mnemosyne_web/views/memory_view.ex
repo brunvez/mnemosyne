@@ -3,13 +3,13 @@ defmodule MnemosyneWeb.MemoryView do
 
   defp enumerate_tags(tags) do
     tags
-    |> Enum.map(&(&1.name))
+    |> Enum.map(& &1.name)
     |> Enum.join(", ")
   end
 
   defp stringify_tags(tags) do
     tags
-    |> Enum.map(&(&1.name))
+    |> Enum.map(& &1.name)
     |> Enum.join(",")
   end
 end

@@ -67,21 +67,21 @@ defmodule Mnemosyne.Memories do
   defp maybe_insert_tag(name) do
     %Tag{}
     |> Tag.changeset(%{name: name})
-    |> Repo.insert
+    |> Repo.insert()
     |> case do
       {:ok, tag} -> tag
       {:error, _} -> Repo.get_by!(Tag, name: name)
     end
   end
 
-  defp build_memory(user, tags, attrs) do
-    %Memory{user_id: user.id}
+  defp build_memory(%Memory{} = memory, tags, attrs) do
+    memory
     |> Memory.changeset(attrs)
     |> Ecto.Changeset.put_assoc(:tags, tags)
   end
 
-  defp build_memory(%Memory{} = memory, tags, attrs) do
-    memory
+  defp build_memory(user, tags, attrs) do
+    %Memory{user_id: user.id}
     |> Memory.changeset(attrs)
     |> Ecto.Changeset.put_assoc(:tags, tags)
   end

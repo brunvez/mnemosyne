@@ -10,7 +10,7 @@ defmodule Mnemosyne.Repo.Migrations.CreateMemories do
       timestamps()
     end
 
-    create index(:memories, [:title])
+    create unique_index(:memories, [:title])
     create index(:memories, [:user_id])
   end
 end

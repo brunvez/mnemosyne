@@ -22,6 +22,7 @@ defmodule Mnemosyne.Memories.Memory do
     memory
     |> cast(attrs, [:title, :description, :user_id])
     |> validate_required([:title, :user_id])
+    |> unique_constraint(:title)
     |> assoc_constraint(:user)
   end
 end
