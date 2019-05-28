@@ -18,12 +18,12 @@ defmodule Mnemosyne.AccountsTest do
       password_confirmation: "NOTpassword"
     }
 
-    def user_fixture() do
+    def fixture(:user) do
       UserFactory.create(:user, @valid_attrs)
     end
 
     test "get_user!/1 returns the user with given id" do
-      user = user_fixture()
+      user = fixture(:user)
       assert Accounts.get_user!(user.id).email == user.email
     end
 
