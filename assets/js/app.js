@@ -20,7 +20,7 @@ import selectizeCss from 'selectize/dist/css/selectize.css'
 // }).$mount('#app');
 
 $(function () {
-  $('#memory-tags').selectize({
+  $('#memory_tags').selectize({
     delimiter: ',',
     persist: false,
     create: function(input) {

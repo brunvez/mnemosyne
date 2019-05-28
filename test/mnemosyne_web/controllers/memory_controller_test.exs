@@ -1,21 +1,25 @@
 defmodule MnemosyneWeb.MemoryControllerTest do
   use MnemosyneWeb.ConnCase
+  @moduletag :browser_authenticated
 
-  alias Mnemosyne.Memories
+  alias Mnemosyne.MemoryFactory
 
-  @create_attrs %{description: "some description", title: "some title"}
-  @update_attrs %{description: "some updated description", title: "some updated title"}
+  @create_attrs %{description: "some description", title: "some title", tags: "test, tags, 1 2 3"}
+  @update_attrs %{
+    description: "some updated description",
+    title: "some updated title",
+    tags: "other, tags"
+  }
   @invalid_attrs %{description: nil, title: nil}
 
-  def fixture(:memory) do
-    {:ok, memory} = Memories.create_memory(@create_attrs)
-    memory
+  def fixture(:memory, user) do
+    MemoryFactory.create(:memory, user)
   end
 
   describe "index" do
     test "lists all memories", %{conn: conn} do
-      conn = get(conn, Routes.memory_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Memories"
+      conn = get(conn, Routes.root_path(conn, :index))
+      assert html_response(conn, 200) =~ "Memories"
     end
   end
 
@@ -74,7 +78,7 @@ defmodule MnemosyneWeb.MemoryControllerTest do
 
     test "deletes chosen memory", %{conn: conn, memory: memory} do
       conn = delete(conn, Routes.memory_path(conn, :delete, memory))
-      assert redirected_to(conn) == Routes.memory_path(conn, :index)
+      assert redirected_to(conn) == Routes.root_path(conn, :index)
 
       assert_error_sent 404, fn ->
         get(conn, Routes.memory_path(conn, :show, memory))
@@ -82,8 +86,8 @@ defmodule MnemosyneWeb.MemoryControllerTest do
     end
   end
 
-  defp create_memory(_) do
-    memory = fixture(:memory)
+  defp create_memory(%{user: user}) do
+    memory = fixture(:memory, user)
     {:ok, memory: memory}
   end
 end

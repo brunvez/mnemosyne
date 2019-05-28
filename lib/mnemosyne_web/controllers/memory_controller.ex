@@ -14,10 +14,10 @@ defmodule MnemosyneWeb.MemoryController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"memory" => memory_params, "tags" => tags_string}) do
-    tags = parse_tags(tags_string)
+  def create(conn, %{"memory" => memory_params}) do
+    tags = parse_tags(memory_params["tags"])
 
-    case Memories.create_memory(current_user(conn), tags, memory_params) do
+    case Memories.create_memory(current_user(conn), Map.put(memory_params, "tags", tags)) do
       {:ok, memory} ->
         conn
         |> put_flash(:info, "Memory created successfully.")
@@ -39,11 +39,11 @@ defmodule MnemosyneWeb.MemoryController do
     render(conn, "edit.html", memory: memory, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "memory" => memory_params, "tags" => tags_string}) do
+  def update(conn, %{"id" => id, "memory" => memory_params}) do
     memory = Memories.get_memory!(id)
-    tags = parse_tags(tags_string)
+    tags = parse_tags(memory_params["tags"])
 
-    case Memories.update_memory(memory, tags, memory_params) do
+    case Memories.update_memory(memory, Map.put(memory_params, "tags", tags)) do
       {:ok, memory} ->
         conn
         |> put_flash(:info, "Memory updated successfully.")
@@ -64,7 +64,7 @@ defmodule MnemosyneWeb.MemoryController do
   end
 
   defp parse_tags(tags_string) do
-    tags_string
+    (tags_string || "")
     |> String.split(",")
     |> Enum.map(&String.trim/1)
     |> Enum.map(&String.downcase/1)

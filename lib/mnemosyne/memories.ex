@@ -25,7 +25,9 @@ defmodule Mnemosyne.Memories do
     |> Repo.preload(:tags)
   end
 
-  def create_memory(user, tag_names, attrs \\ %{}) do
+  def create_memory(user, attrs \\ %{}) do
+    tag_names = extract_option(:tags, attrs, default: [])
+
     Multi.new()
     |> Multi.run(:tags, fn _, _ -> {:ok, get_or_insert_tags(tag_names)} end)
     |> Multi.insert(:memory, &build_memory(user, &1.tags, attrs))
@@ -36,7 +38,9 @@ defmodule Mnemosyne.Memories do
     end
   end
 
-  def update_memory(%Memory{} = memory, tag_names, attrs) do
+  def update_memory(%Memory{} = memory, attrs) do
+    tag_names = extract_option(:tags, attrs, default: [])
+
     Multi.new()
     |> Multi.run(:tags, fn _, _ -> {:ok, get_or_insert_tags(tag_names)} end)
     |> Multi.update(:memory, &build_memory(memory, &1.tags, attrs))
@@ -53,6 +57,10 @@ defmodule Mnemosyne.Memories do
 
   def change_memory(%Memory{} = memory) do
     Memory.changeset(memory, %{})
+  end
+
+  defp extract_option(key, map, default: default) when is_atom(key) do
+    map[key] || map[Atom.to_string(key)] || default
   end
 
   # TODO use upsert after postgres upgrade

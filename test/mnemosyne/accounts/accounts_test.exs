@@ -1,7 +1,7 @@
 defmodule Mnemosyne.AccountsTest do
   use Mnemosyne.DataCase
 
-  alias Mnemosyne.Accounts  
+  alias Mnemosyne.Accounts
   alias Mnemosyne.UserFactory
 
   describe "users" do
