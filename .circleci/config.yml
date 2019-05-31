@@ -57,5 +57,5 @@ jobs:
       - store_test_results:
           path: _build/test/lib/mnemosyne
       
-      - store_store_artifacts:
+      - store_artifacts:
           path: cover
