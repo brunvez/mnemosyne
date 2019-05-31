@@ -48,7 +48,8 @@ defmodule Mnemosyne.MixProject do
       {:guardian, "~> 1.0"},
       {:corsica, "~> 1.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false},
+      {:junit_formatter, "~> 3.0", only: [:test]}
     ]
   end
 
