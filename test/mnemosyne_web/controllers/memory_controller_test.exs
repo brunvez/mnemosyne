@@ -52,7 +52,7 @@ defmodule MnemosyneWeb.MemoryControllerTest do
 
   describe "show memory" do
     setup [:create_memory]
-    
+
     test "renders the memory", %{conn: conn, memory: memory} do
       conn = get(conn, Routes.memory_path(conn, :show, memory))
       assert html_response(conn, 200) =~ "Show Memory"
