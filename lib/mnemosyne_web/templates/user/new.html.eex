@@ -23,7 +23,7 @@
     <%= submit gettext("Submit"), class: "button button--black" %>
     <span>
       <%= gettext "Already have an account?" %>
-      <%= link gettext("Log in"), to: Routes.sign_up_path(@conn, :new) %>  
+      <%= link gettext("Log in"), to: Routes.login_path(@conn, :new) %>  
     </span>
   </div>
 <% end %>

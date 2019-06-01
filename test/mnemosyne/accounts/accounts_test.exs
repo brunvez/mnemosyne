@@ -2,6 +2,7 @@ defmodule Mnemosyne.AccountsTest do
   use Mnemosyne.DataCase
 
   alias Mnemosyne.Accounts
+  alias Mnemosyne.UserFactory
 
   describe "users" do
     alias Mnemosyne.Accounts.User
@@ -17,17 +18,12 @@ defmodule Mnemosyne.AccountsTest do
       password_confirmation: "NOTpassword"
     }
 
-    def user_fixture(attrs \\ %{}) do
-      {:ok, user} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Accounts.create_user()
-
-      user
+    def fixture(:user) do
+      UserFactory.create(:user, @valid_attrs)
     end
 
     test "get_user!/1 returns the user with given id" do
-      user = user_fixture()
+      user = fixture(:user)
       assert Accounts.get_user!(user.id).email == user.email
     end
 

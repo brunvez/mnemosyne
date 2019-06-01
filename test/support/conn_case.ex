@@ -19,6 +19,14 @@ defmodule MnemosyneWeb.ConnCase do
   alias Mnemosyne.Authentication.Guardian.Plug, as: AuthenticationPlug
   alias Mnemosyne.UserFactory
 
+  @default_opts [
+    store: :cookie,
+    key: "secretkey",
+    encryption_salt: "encrypted cookie salt",
+    signing_salt: "signing salt"
+  ]
+  @signing_opts Plug.Session.init(Keyword.put(@default_opts, :encrypt, false))
+
   using do
     quote do
       # Import conveniences for testing with connections
@@ -40,7 +48,8 @@ defmodule MnemosyneWeb.ConnCase do
     conn = Phoenix.ConnTest.build_conn()
 
     if tags[:browser_authenticated] do
-      authenticate_user_on_session(conn)
+      {:ok, conn, user} = authenticate_user_on_session(conn)
+      {:ok, conn: conn, user: user}
     else
       {:ok, conn: conn}
     end
@@ -48,7 +57,13 @@ defmodule MnemosyneWeb.ConnCase do
 
   defp authenticate_user_on_session(conn) do
     user = UserFactory.create(:user)
-    conn = AuthenticationPlug.sign_in(conn, user)
-    {:ok, conn: conn, user: user}
+
+    conn =
+      conn
+      |> Plug.Session.call(@signing_opts)
+      |> Plug.Conn.fetch_session()
+      |> AuthenticationPlug.sign_in(user)
+
+    {:ok, conn, user}
   end
 end

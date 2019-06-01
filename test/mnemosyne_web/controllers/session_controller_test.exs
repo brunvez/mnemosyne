@@ -37,8 +37,9 @@ defmodule MnemosyneWeb.SessionControllerTest do
     end
   end
 
-  @tag :browser_authenticated
   describe "create session when logged in" do
+    @describetag :browser_authenticated
+
     test "redirects to root with an error message", %{conn: conn} do
       conn = post(conn, Routes.session_path(conn, :create), login: @create_attrs)
 
@@ -47,8 +48,9 @@ defmodule MnemosyneWeb.SessionControllerTest do
     end
   end
 
-  @tag :browser_authenticated
   describe "delete session when logged in" do
+    @describetag :browser_authenticated
+
     test "redirects to the login page with a message", %{conn: conn} do
       conn = delete(conn, Routes.session_path(conn, :delete))
 

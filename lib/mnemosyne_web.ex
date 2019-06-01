@@ -24,6 +24,8 @@ defmodule MnemosyneWeb do
       import Plug.Conn
       import MnemosyneWeb.Gettext
       alias MnemosyneWeb.Router.Helpers, as: Routes
+
+      def current_user(conn), do: conn.assigns.current_user
     end
   end
 

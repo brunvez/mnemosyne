@@ -1,0 +1,23 @@
+<h1>Show Memory</h1>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @memory.title %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @memory.description %>
+  </li>
+
+  <li>
+    <strong>Tags:</strong>
+    <%= enumerate_tags(@memory.tags) %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.memory_path(@conn, :edit, @memory) %></span>
+<span><%= link "Back", to: Routes.root_path(@conn, :index) %></span>
