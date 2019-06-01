@@ -12,7 +12,7 @@ defmodule Mnemosyne.Memories do
   alias Mnemosyne.Memories.Memory
   alias Mnemosyne.Memories.Tag
 
-  def list_memories(user) do
+  def list_user_memories(user) do
     Memory
     |> where(user_id: ^user.id)
     |> Repo.all()
@@ -55,9 +55,7 @@ defmodule Mnemosyne.Memories do
     Repo.delete(memory)
   end
 
-  def change_memory(%Memory{} = memory) do
-    Memory.changeset(memory, %{})
-  end
+  def change_memory(%Memory{} = memory), do: Memory.changeset(memory, %{})
 
   defp extract_option(key, map, default: default) when is_atom(key) do
     map[key] || map[Atom.to_string(key)] || default

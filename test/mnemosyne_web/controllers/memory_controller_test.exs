@@ -3,6 +3,7 @@ defmodule MnemosyneWeb.MemoryControllerTest do
   @moduletag :browser_authenticated
 
   alias Mnemosyne.MemoryFactory
+  alias Mnemosyne.UserFactory
 
   @create_attrs %{description: "some description", title: "some title", tags: "test, tags, 1 2 3"}
   @update_attrs %{
@@ -16,6 +17,8 @@ defmodule MnemosyneWeb.MemoryControllerTest do
     MemoryFactory.create(:memory, user)
   end
 
+  def fixture(:user, attrs), do: UserFactory.create(:user, attrs)
+
   describe "index" do
     test "lists all memories", %{conn: conn} do
       conn = get(conn, Routes.root_path(conn, :index))
@@ -24,7 +27,7 @@ defmodule MnemosyneWeb.MemoryControllerTest do
   end
 
   describe "new memory" do
-    test "renders form", %{conn: conn} do
+    test "renders the form", %{conn: conn} do
       conn = get(conn, Routes.memory_path(conn, :new))
       assert html_response(conn, 200) =~ "New Memory"
     end
@@ -47,12 +50,45 @@ defmodule MnemosyneWeb.MemoryControllerTest do
     end
   end
 
+  describe "show memory" do
+    setup [:create_memory]
+    
+    test "renders the memory", %{conn: conn, memory: memory} do
+      conn = get(conn, Routes.memory_path(conn, :show, memory))
+      assert html_response(conn, 200) =~ "Show Memory"
+    end
+  end
+
+  describe "show memory when the memory belongs to another user" do
+    test "redirects with an error", %{conn: conn} do
+      other_user = fixture(:user, %{email: "other@email.com"})
+      memory = fixture(:memory, other_user)
+
+      conn = get(conn, Routes.memory_path(conn, :show, memory))
+
+      assert redirected_to(conn) == Routes.root_path(conn, :index)
+      assert %{"error" => "You are not authorized to access that memory"} = get_flash(conn)
+    end
+  end
+
   describe "edit memory" do
     setup [:create_memory]
 
-    test "renders form for editing chosen memory", %{conn: conn, memory: memory} do
+    test "renders the form for editing the chosen memory", %{conn: conn, memory: memory} do
       conn = get(conn, Routes.memory_path(conn, :edit, memory))
       assert html_response(conn, 200) =~ "Edit Memory"
+    end
+  end
+
+  describe "edit memory when the memory belongs to another user" do
+    test "redirects with an error", %{conn: conn} do
+      other_user = fixture(:user, %{email: "other@email.com"})
+      memory = fixture(:memory, other_user)
+
+      conn = get(conn, Routes.memory_path(conn, :edit, memory))
+
+      assert redirected_to(conn) == Routes.root_path(conn, :index)
+      assert %{"error" => "You are not authorized to access that memory"} = get_flash(conn)
     end
   end
 
@@ -73,16 +109,40 @@ defmodule MnemosyneWeb.MemoryControllerTest do
     end
   end
 
+  describe "update memory when the memory belongs to another user" do
+    test "redirects with an error", %{conn: conn} do
+      other_user = fixture(:user, %{email: "other@email.com"})
+      memory = fixture(:memory, other_user)
+
+      conn = put(conn, Routes.memory_path(conn, :update, memory), memory: @update_attrs)
+
+      assert redirected_to(conn) == Routes.root_path(conn, :index)
+      assert %{"error" => "You are not authorized to access that memory"} = get_flash(conn)
+    end
+  end
+
   describe "delete memory" do
     setup [:create_memory]
 
-    test "deletes chosen memory", %{conn: conn, memory: memory} do
+    test "deletes the chosen memory", %{conn: conn, memory: memory} do
       conn = delete(conn, Routes.memory_path(conn, :delete, memory))
       assert redirected_to(conn) == Routes.root_path(conn, :index)
 
       assert_error_sent 404, fn ->
         get(conn, Routes.memory_path(conn, :show, memory))
       end
+    end
+  end
+
+  describe "delete memory when the memory belongs to another user" do
+    test "redirects with an error message", %{conn: conn} do
+      other_user = fixture(:user, %{email: "other@email.com"})
+      memory = fixture(:memory, other_user)
+
+      conn = delete(conn, Routes.memory_path(conn, :delete, memory))
+
+      assert redirected_to(conn) == Routes.root_path(conn, :index)
+      assert %{"error" => "You are not authorized to access that memory"} = get_flash(conn)
     end
   end
 

@@ -17,9 +17,9 @@ defmodule Mnemosyne.MemoriesTest do
       MemoryFactory.create(:memory, user)
     end
 
-    test "list_memories/0 returns all memories", %{user: user} do
+    test "list_user_memories/1 returns all memories created by the user", %{user: user} do
       memory = fixture(:memory, user)
-      assert Memories.list_memories(user) == [memory]
+      assert Memories.list_user_memories(user) == [memory]
     end
 
     test "get_memory!/1 returns the memory with given id", %{user: user} do
@@ -27,13 +27,13 @@ defmodule Mnemosyne.MemoriesTest do
       assert Memories.get_memory!(memory.id) == memory
     end
 
-    test "create_memory/1 with valid data creates a memory", %{user: user} do
+    test "create_memory/2 with valid data creates a memory for the user", %{user: user} do
       assert {:ok, %Memory{} = memory} = Memories.create_memory(user, @valid_attrs)
       assert memory.description == "some description"
       assert memory.title == "some title"
     end
 
-    test "create_memory/1 with invalid data returns error changeset", %{user: user} do
+    test "create_memory/2 with invalid data returns error changeset", %{user: user} do
       assert {:error, %Ecto.Changeset{}} = Memories.create_memory(user, @invalid_attrs)
     end
 

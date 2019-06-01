@@ -14,7 +14,7 @@
   <%= error_tag f, :description %>
 
   <label><%= gettext "Tags" %></label>
-  <%= text_input :memory, :tags, value: if @changeset.data.id, do: stringify_tags(@changeset.data.tags), else: "" %>
+  <%= text_input :memory, :tags, value: stringify_tags(@changeset.data.tags) %>
   
   <div>
     <%= submit "Save" %>

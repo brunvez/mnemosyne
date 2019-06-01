@@ -7,6 +7,8 @@ defmodule MnemosyneWeb.MemoryView do
     |> Enum.join(", ")
   end
 
+  defp stringify_tags(%Ecto.Association.NotLoaded{} = _tags), do: ""
+
   defp stringify_tags(tags) do
     tags
     |> Enum.map(& &1.name)
