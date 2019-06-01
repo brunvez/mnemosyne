@@ -1,4 +1,5 @@
 # Mnemosyne
+[![CircleCI](https://circleci.com/gh/brunvez/mnemosyne.svg?style=svg&circle-token=7731762847115a8287cd4b08f02127f16635338d)](https://circleci.com/gh/brunvez/mnemosyne)
 
 To start your Phoenix server:
 

@@ -10,7 +10,8 @@ defmodule Mnemosyne.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls]
     ]
   end
 
@@ -48,7 +49,9 @@ defmodule Mnemosyne.MixProject do
       {:guardian, "~> 1.0"},
       {:corsica, "~> 1.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false},
+      {:junit_formatter, "~> 3.0", only: [:test]},
+      {:excoveralls, "~> 0.10", only: :test}
     ]
   end
 
