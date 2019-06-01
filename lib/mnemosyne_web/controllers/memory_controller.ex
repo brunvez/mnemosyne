@@ -26,7 +26,7 @@ defmodule MnemosyneWeb.MemoryController do
     case Memories.create_memory(current_user(conn), Map.put(memory_params, "tags", tags)) do
       {:ok, memory} ->
         conn
-        |> put_flash(:info, "Memory created successfully.")
+        |> put_flash(:info, gettext("Memory created successfully"))
         |> redirect(to: Routes.memory_path(conn, :show, memory))
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -52,7 +52,7 @@ defmodule MnemosyneWeb.MemoryController do
     case Memories.update_memory(memory, Map.put(memory_params, "tags", tags)) do
       {:ok, memory} ->
         conn
-        |> put_flash(:info, "Memory updated successfully.")
+        |> put_flash(:info, gettext("Memory updated successfully"))
         |> redirect(to: Routes.memory_path(conn, :show, memory))
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -65,7 +65,7 @@ defmodule MnemosyneWeb.MemoryController do
     {:ok, _memory} = Memories.delete_memory(memory)
 
     conn
-    |> put_flash(:info, "Memory deleted successfully.")
+    |> put_flash(:info, gettext("Memory deleted successfully"))
     |> redirect(to: Routes.root_path(conn, :index))
   end
 
