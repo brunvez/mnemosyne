@@ -14,7 +14,7 @@ defmodule MnemosyneWeb.MemoryControllerTest do
   @invalid_attrs %{description: nil, title: nil}
 
   def fixture(:memory, user) do
-    MemoryFactory.create(:memory, user)
+    MemoryFactory.create(user)
   end
 
   def fixture(:user, attrs), do: UserFactory.create(:user, attrs)

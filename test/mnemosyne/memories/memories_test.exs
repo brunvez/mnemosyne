@@ -14,7 +14,7 @@ defmodule Mnemosyne.MemoriesTest do
     @invalid_attrs %{description: nil, title: nil}
 
     def fixture(:memory, user) do
-      MemoryFactory.create(:memory, user)
+      MemoryFactory.create(user)
     end
 
     test "list_user_memories/1 returns all memories created by the user", %{user: user} do
