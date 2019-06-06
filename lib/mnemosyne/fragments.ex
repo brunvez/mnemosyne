@@ -8,16 +8,19 @@ defmodule Mnemosyne.Fragments do
   alias Mnemosyne.Repo
 
   alias Mnemosyne.Fragments.Link
+  alias Mnemosyne.Memories.Memory
 
-  def list_links do
-    Repo.all(Link)
+  def list_memory_links(%Memory{id: memory_id}) do
+    Link
+    |> where(memory_id: ^memory_id)
+    |> Repo.all()
+    |> Enum.sort_by(&(&1.relative_position))
   end
 
-  def get_link!(id), do: Repo.get!(Link, id)
-
-  def create_link(attrs \\ %{}) do
+  def create_link(%Memory{} = memory, attrs \\ %{}) do
     %Link{}
     |> Link.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:memory, memory)
     |> Repo.insert()
   end
 

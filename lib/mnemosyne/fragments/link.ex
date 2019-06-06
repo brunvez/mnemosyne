@@ -16,7 +16,7 @@ defmodule Mnemosyne.Fragments.Link do
   def changeset(link, attrs) do
     link
     |> cast(attrs, [:url, :title, :relative_position, :memory_id])
-    |> validate_required([:url, :relative_position, :memory_id])
+    |> validate_required([:url, :relative_position])
     |> assoc_constraint(:memory)
   end
 end

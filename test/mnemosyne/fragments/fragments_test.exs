@@ -15,11 +15,8 @@ defmodule Mnemosyne.FragmentsTest do
 
     def fixture(:link, attrs) do
       memory = fixture(:memory)
-      {:ok, link} =
-        attrs
-        |> Map.put(:memory_id, memory.id)
-        |> Enum.into(@valid_attrs)
-        |> Fragments.create_link()
+      attrs = Enum.into(attrs, @valid_attrs)
+      {:ok, link} = Fragments.create_link(memory, attrs)
 
       link
     end
@@ -28,26 +25,23 @@ defmodule Mnemosyne.FragmentsTest do
       MemoryFactory.create_with_user(attrs)
     end
 
-    test "list_links/0 returns all links" do
+    test "list_memory_links/1 returns all links for the memory" do
       link = fixture(:link)
-      assert Fragments.list_links() == [link]
-    end
+      link_id = link.id
 
-    test "get_link!/1 returns the link with given id" do
-      link = fixture(:link)
-      assert Fragments.get_link!(link.id) == link
+      assert [%Link{id: ^link_id}] = Fragments.list_memory_links(link.memory)
     end
 
     test "create_link/1 with valid data creates a link" do
       memory = fixture(:memory)
-      attrs = Map.put(@valid_attrs, :memory_id, memory.id)
-      assert {:ok, %Link{} = link} = Fragments.create_link(attrs)
+      assert {:ok, %Link{} = link} = Fragments.create_link(memory, @valid_attrs)
       assert link.title == "some title"
       assert link.url == "some url"
     end
 
     test "create_link/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Fragments.create_link(@invalid_attrs)
+      memory = fixture(:memory)
+      assert {:error, %Ecto.Changeset{}} = Fragments.create_link(memory, @invalid_attrs)
     end
 
     test "update_link/2 with valid data updates the link" do
@@ -60,13 +54,12 @@ defmodule Mnemosyne.FragmentsTest do
     test "update_link/2 with invalid data returns error changeset" do
       link = fixture(:link)
       assert {:error, %Ecto.Changeset{}} = Fragments.update_link(link, @invalid_attrs)
-      assert link == Fragments.get_link!(link.id)
     end
 
     test "delete_link/1 deletes the link" do
       link = fixture(:link)
       assert {:ok, %Link{}} = Fragments.delete_link(link)
-      assert_raise Ecto.NoResultsError, fn -> Fragments.get_link!(link.id) end
+      assert [] == Fragments.list_memory_links(link.memory)
     end
 
     test "change_link/1 returns a link changeset" do

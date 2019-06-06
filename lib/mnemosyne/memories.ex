@@ -9,12 +9,13 @@ defmodule Mnemosyne.Memories do
   alias Ecto.Multi
   alias Mnemosyne.Repo
 
+  alias Mnemosyne.Accounts.User
   alias Mnemosyne.Memories.Memory
   alias Mnemosyne.Memories.Tag
 
-  def list_user_memories(user) do
+  def list_user_memories(%User{id: user_id}) do
     Memory
-    |> where(user_id: ^user.id)
+    |> where(user_id: ^user_id)
     |> Repo.all()
     |> Repo.preload(:tags)
   end
