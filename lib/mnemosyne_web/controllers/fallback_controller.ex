@@ -20,6 +20,12 @@ defmodule MnemosyneWeb.FallbackController do
     |> render(:"404")
   end
 
+  def call(conn, {:error, :unauthorized, message}) do
+    conn
+    |> put_status(:unauthorized)
+    |> json(%{errors: message})
+  end
+
   def call(conn, {:error, :unauthorized}) do
     conn
     |> put_status(:unauthorized)

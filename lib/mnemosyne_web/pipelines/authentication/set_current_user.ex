@@ -13,8 +13,10 @@ defmodule MnemosyneWeb.Authentication.SetCurrentUser do
   end
 
   defp set_current_user_from_session(conn) do
-    user = Guardian.Plug.current_resource(conn)
-    Plug.Conn.assign(conn, :current_user, user)
+    case Guardian.Plug.current_resource(conn) do
+      nil -> Plug.Conn.send_resp(conn, :not_found, "")
+      user -> Plug.Conn.assign(conn, :current_user, user)
+    end
   end
 
   defp set_current_user_from_token(conn, token) do

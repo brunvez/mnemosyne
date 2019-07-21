@@ -17,6 +17,7 @@ defmodule MnemosyneWeb.ConnCase do
 
   alias Ecto.Adapters.SQL.Sandbox, as: DatabaseAdapter
   alias Mnemosyne.Authentication.Guardian.Plug, as: AuthenticationPlug
+  alias Mnemosyne.Authentication.Guardian
   alias Mnemosyne.UserFactory
 
   @default_opts [
@@ -47,12 +48,20 @@ defmodule MnemosyneWeb.ConnCase do
 
     conn = Phoenix.ConnTest.build_conn()
 
-    if tags[:browser_authenticated] do
-      {:ok, conn, user} = authenticate_user_on_session(conn)
+    if tags[:browser_authenticated] || tags[:api_authenticated] do
+      {:ok, conn, user} = authenticate(conn, tags)
       {:ok, conn: conn, user: user}
     else
       {:ok, conn: conn}
     end
+  end
+
+  defp authenticate(conn, %{browser_authenticated: _}) do
+    authenticate_user_on_session(conn)
+  end
+
+  defp authenticate(conn, %{api_authenticated: _}) do
+    authenticate_user_with_token(conn)
   end
 
   defp authenticate_user_on_session(conn) do
@@ -63,6 +72,17 @@ defmodule MnemosyneWeb.ConnCase do
       |> Plug.Session.call(@signing_opts)
       |> Plug.Conn.fetch_session()
       |> AuthenticationPlug.sign_in(user)
+
+    {:ok, conn, user}
+  end
+
+  defp authenticate_user_with_token(conn) do
+    user = UserFactory.create(:user)
+    {:ok, token, _claims} = Guardian.encode_and_sign(user)
+
+    conn =
+      conn
+      |> Plug.Conn.put_req_header("authorization", "Bearer #{token}")
 
     {:ok, conn, user}
   end
