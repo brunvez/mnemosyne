@@ -24,12 +24,15 @@ defmodule MnemosyneWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
     plug MnemosyneWeb.AuthenticationPipeline
   end
 
   pipeline :ensure_api_authenticated do
     plug MnemosyneWeb.AuthenticationPipeline,
       error_handler: MnemosyneWeb.Authentication.ApiErrorHandler
+
+    plug MnemosyneWeb.Authentication.SetCurrentUser
   end
 
   scope "/api/v1", MnemosyneWeb.Api.V1, as: :api_v1 do
@@ -43,6 +46,7 @@ defmodule MnemosyneWeb.Router do
     pipe_through [:api, :ensure_api_authenticated]
 
     resources "/user", UserController, singleton: true, only: [:show, :update]
+    resources "/memories", MemoryController, only: [:show, :create, :update]
   end
 
   scope "/", MnemosyneWeb do
