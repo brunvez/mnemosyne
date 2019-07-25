@@ -1,5 +1,6 @@
 // import alertify from 'alertifyjs';
 import css from '../css/app.css';
+import "easymde/dist/easymde.min.css";
 import 'phoenix_html';
 // import Vue from 'vue';
 // import App from './App.vue';

@@ -4,7 +4,6 @@
   <thead>
     <tr>
       <th>Title</th>
-      <th>Description</th>
       <th>Tags</th>
 
       <th></th>
@@ -14,7 +13,6 @@
     <%= for memory <- @memories do %>
         <tr>
           <td><%= memory.title %></td>
-          <td><%= memory.description %></td>
           <td><%= enumerate_tags(memory.tags) %></td>
 
           <td>
