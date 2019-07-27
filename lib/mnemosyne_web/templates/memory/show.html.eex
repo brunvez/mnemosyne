@@ -1,23 +1,11 @@
-<h1>Show Memory</h1>
+<div class="row row-spaced">
+  <span><%= link "Memories", to: Routes.root_path(@conn, :index) %></span>
+  <span><%= link "Edit", to: Routes.memory_path(@conn, :edit, @memory) %></span>
+</div>
 
-<ul>
+<h2><%= @memory.title %></h2>
 
-  <li>
-    <strong>Title:</strong>
-    <%= @memory.title %>
-  </li>
+<%= raw parse_description @memory.description %>
 
-  <li>
-    <strong>Description:</strong>
-    <%= @memory.description %>
-  </li>
-
-  <li>
-    <strong>Tags:</strong>
-    <%= enumerate_tags(@memory.tags) %>
-  </li>
-
-</ul>
-
-<span><%= link "Edit", to: Routes.memory_path(@conn, :edit, @memory) %></span>
-<span><%= link "Memories", to: Routes.root_path(@conn, :index) %></span>
+<strong>Tags:</strong>
+<%= enumerate_tags(@memory.tags) %>

@@ -48,6 +48,7 @@ defmodule Mnemosyne.MixProject do
       {:bcrypt_elixir, "~> 1.0"},
       {:guardian, "~> 1.0"},
       {:corsica, "~> 1.0"},
+      {:earmark, "~> 1.3"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false},
       {:junit_formatter, "~> 3.0", only: [:test]},

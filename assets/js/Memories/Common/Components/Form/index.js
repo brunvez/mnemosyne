@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles'
+import TextField from '@material-ui/core/TextField'
 import FragmentsContainer from '../FragmentsContainer'
-import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button'
+import DescriptionInput from './DescriptionInput'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -78,13 +79,9 @@ export default function Form({ onSubmit, memory = emptyMemory }) {
         helperText={errors.title}
         error={!!errors.title}
       />
-      <TextField
-        label='Description'
+      <DescriptionInput
         value={description}
-        onChange={handleChange(setDescription)}
-        className={classes.textField}
-        margin='normal'
-        multiline
+        setValue={setDescription}
       />
       <FragmentsContainer/>
       <TextField
