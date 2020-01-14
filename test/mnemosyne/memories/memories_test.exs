@@ -1,5 +1,5 @@
 defmodule Mnemosyne.MemoriesTest do
-  use Mnemosyne.DataCase
+  use Mnemosyne.DataCase, async: true
 
   alias Mnemosyne.Memories
   alias Mnemosyne.MemoryFactory

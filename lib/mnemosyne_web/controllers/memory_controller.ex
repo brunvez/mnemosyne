@@ -1,6 +1,7 @@
 defmodule MnemosyneWeb.MemoryController do
   use MnemosyneWeb, :controller
 
+  alias Mnemosyne.Fragments
   alias Mnemosyne.Memories
   alias Mnemosyne.Memories.MemoryPolicy
 
@@ -20,6 +21,7 @@ defmodule MnemosyneWeb.MemoryController do
 
   def show(conn, _params) do
     memory = conn.assigns.memory
+    memory = Fragments.preload_memory_fragments(memory)
     render(conn, "show.html", memory: memory)
   end
 

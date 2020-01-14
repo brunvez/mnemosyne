@@ -1,5 +1,5 @@
 defmodule MnemosyneWeb.Api.V1.UserControllerTest do
-  use MnemosyneWeb.ConnCase
+  use MnemosyneWeb.ConnCase, async: true
 
   alias Mnemosyne.Accounts
 

@@ -1,5 +1,5 @@
 defmodule MnemosyneWeb.UserControllerTest do
-  use MnemosyneWeb.ConnCase
+  use MnemosyneWeb.ConnCase, async: true
 
   @create_attrs %{
     email: "some@email.com",

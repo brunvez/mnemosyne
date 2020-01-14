@@ -10,22 +10,39 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Link({ url = '' }) {
+export default function Link({ editFragment, url, title }) {
   const classes = useStyles()
-  const [localUrl, setUrl] = useState(url)
+  const [localUrl, setLocalUrl] = useState(url || '')
+  const [localTitle, setLocalTitle] = useState(title || '')
 
+  const setUrl = url => {
+    setLocalUrl(url)
+    editFragment({ url })
+  }
+  const setTitle = title => {
+    setLocalTitle(title)
+    editFragment({ title })
+  }
   const handleChange = setter => event => {
     setter(event.target.value)
   }
 
   return (
-    <TextField
-      label='Link Fragment'
-      placeholder='URL'
-      value={localUrl}
-      onChange={handleChange(setUrl)}
-      className={classes.textField}
-      margin='normal'
-    />
+    <React.Fragment>
+      <TextField
+        label='Title'
+        value={localTitle}
+        onChange={handleChange(setTitle)}
+        className={classes.textField}
+        margin='normal'
+      />
+      <TextField
+        label='URL'
+        value={localUrl}
+        onChange={handleChange(setUrl)}
+        className={classes.textField}
+        margin='normal'
+      />
+    </React.Fragment>
   )
 }

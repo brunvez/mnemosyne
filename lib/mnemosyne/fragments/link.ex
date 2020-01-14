@@ -13,6 +13,8 @@ defmodule Mnemosyne.Fragments.Link do
     timestamps()
   end
 
+  def fragment_type, do: "link"
+
   def changeset(link, attrs) do
     link
     |> cast(attrs, [:url, :title, :relative_position, :memory_id])

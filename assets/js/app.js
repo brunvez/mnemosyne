@@ -1,11 +1,12 @@
 // import alertify from 'alertifyjs';
 import css from '../css/app.css';
-import "easymde/dist/easymde.min.css";
+import 'easymde/dist/easymde.min.css';
+import 'alertifyjs/build/css/alertify.min.css'
 import 'phoenix_html';
 // import Vue from 'vue';
 // import App from './App.vue';
 // import router from 'Router';
-// import store from 'Store'
+// import store from 'store'
 import $ from 'jquery'
 import selectize from 'selectize'
 import selectizeCss from 'selectize/dist/css/selectize.css'

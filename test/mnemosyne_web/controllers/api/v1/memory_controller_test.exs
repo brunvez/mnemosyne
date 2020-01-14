@@ -1,5 +1,5 @@
 defmodule MnemosyneWeb.Api.V1.MemoryControllerTest do
-  use MnemosyneWeb.ConnCase
+  use MnemosyneWeb.ConnCase, async: true
   @moduletag :api_authenticated
 
   alias Mnemosyne.MemoryFactory

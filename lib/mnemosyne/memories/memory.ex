@@ -3,6 +3,7 @@ defmodule Mnemosyne.Memories.Memory do
   use Ecto.Schema
   import Ecto.Changeset
   alias Mnemosyne.Accounts.User
+  alias Mnemosyne.Fragments.Link
   alias Mnemosyne.Memories.Tag
 
   schema "memories" do
@@ -13,6 +14,9 @@ defmodule Mnemosyne.Memories.Memory do
     many_to_many :tags, Tag,
       join_through: "memories_tags",
       on_replace: :delete
+
+    field :fragments, {:array, :map}, virtual: true
+    has_many :links, Link
 
     timestamps()
   end

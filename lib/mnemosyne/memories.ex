@@ -13,6 +13,8 @@ defmodule Mnemosyne.Memories do
   alias Mnemosyne.Memories.Memory
   alias Mnemosyne.Memories.Tag
 
+  @fragments_creator Mnemosyne.Fragments
+
   def list_user_memories(%User{id: user_id}) do
     Memory
     |> where(user_id: ^user_id)
@@ -28,14 +30,19 @@ defmodule Mnemosyne.Memories do
 
   def create_memory(user, attrs \\ %{}) do
     tag_names = extract_option(:tags, attrs, default: [])
+    fragments_attrs = extract_option(:fragments, attrs, default: [])
 
     Multi.new()
     |> Multi.run(:tags, fn _, _ -> {:ok, get_or_insert_tags(tag_names)} end)
     |> Multi.insert(:memory, &build_memory(user, &1.tags, attrs))
+    |> Multi.run(:fragments, fn _, %{memory: memory} ->
+      @fragments_creator.create_memory_fragments(memory, fragments_attrs)
+    end)
     |> Repo.transaction()
     |> case do
       {:ok, %{memory: memory}} -> {:ok, memory}
       {:error, :memory, value, _} -> {:error, value}
+      {:error, :fragments, [error | _], _} -> {:error, error}
     end
   end
 
@@ -69,7 +76,7 @@ defmodule Mnemosyne.Memories do
 
   defp get_or_insert_tag(name) do
     Repo.get_by(Tag, name: name) || maybe_insert_tag(name)
-  end
+end
 
   defp maybe_insert_tag(name) do
     %Tag{}

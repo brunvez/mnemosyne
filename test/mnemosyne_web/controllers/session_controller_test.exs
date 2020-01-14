@@ -1,5 +1,5 @@
 defmodule MnemosyneWeb.SessionControllerTest do
-  use MnemosyneWeb.ConnCase
+  use MnemosyneWeb.ConnCase, async: true
 
   alias Mnemosyne.UserFactory
 

@@ -1,6 +1,7 @@
 defmodule MnemosyneWeb.Api.V1.MemoryController do
   use MnemosyneWeb, :controller
 
+  alias Mnemosyne.Fragments
   alias Mnemosyne.Memories
   alias Mnemosyne.Memories.MemoryPolicy
 
@@ -19,6 +20,8 @@ defmodule MnemosyneWeb.Api.V1.MemoryController do
   def create(conn, %{"memory" => memory_params}) do
     case Memories.create_memory(current_user(conn), memory_params) do
       {:ok, memory} ->
+        memory = Fragments.preload_memory_fragments(memory)
+
         conn
         |> put_status(:created)
         |> render(
@@ -50,7 +53,11 @@ defmodule MnemosyneWeb.Api.V1.MemoryController do
   end
 
   defp load_memory(%Plug.Conn{params: %{"id" => id}} = conn, _options) do
-    memory = Memories.get_memory!(id)
+    memory =
+      id
+      |> Memories.get_memory!()
+      |> Fragments.preload_memory_fragments()
+
     assign(conn, :memory, memory)
   end
 

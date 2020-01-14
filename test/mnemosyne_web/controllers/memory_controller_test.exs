@@ -1,5 +1,5 @@
 defmodule MnemosyneWeb.MemoryControllerTest do
-  use MnemosyneWeb.ConnCase
+  use MnemosyneWeb.ConnCase, async: true
   @moduletag :browser_authenticated
 
   alias Mnemosyne.MemoryFactory

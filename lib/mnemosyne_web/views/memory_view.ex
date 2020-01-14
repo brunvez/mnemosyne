@@ -2,6 +2,7 @@ defmodule MnemosyneWeb.MemoryView do
   use MnemosyneWeb, :view
 
   defp parse_description(nil), do: ""
+
   defp parse_description(description) do
     case Earmark.as_html(description) do
       {:ok, html, _} -> html

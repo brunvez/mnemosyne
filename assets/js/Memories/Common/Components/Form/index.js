@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import alertify from 'alertifyjs'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
-import FragmentsContainer from '../FragmentsContainer'
 import Button from '@material-ui/core/Button'
+import FragmentsContainer from '../FragmentsContainer'
 import DescriptionInput from './DescriptionInput'
+import TagsInput from './TagsInput'
+import { editMemory } from '../../actions/memoriesActions';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -17,21 +21,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const emptyMemory = {
-  id: null,
-  title: '',
-  description: '',
-  tags: []
-}
-
-export default function Form({ onSubmit, memory = emptyMemory }) {
+function Form({ onSubmit, memory, editMemory, fragments }) {
   const classes = useStyles()
-  const [title, setTitle] = useState(memory.title)
-  const [description, setDescription] = useState(memory.description || '')
-  const [tags, setTags] = useState(memory.tags.join(','))
-  const [errors, setErrors] = useState({
-    title: false
-  })
+  const setTitle = title => editMemory({ title })
+  const setDescription = description => editMemory({ description })
+  const setTags = tags => editMemory({ tags: tags })
+  const addTag = tag => setTags([...memory.tags, tag])
+  const removeTag = tagIndex => {
+    const newTags = [
+      ...memory.tags.filter((_, index) => index < tagIndex),
+      ...memory.tags.filter((_, index) => index > tagIndex)
+    ]
+    setTags(newTags)
+  }
 
   const handleChange = setter => event => {
     setter(event.target.value)
@@ -39,57 +41,43 @@ export default function Form({ onSubmit, memory = emptyMemory }) {
 
   const triggerSubmit = () => {
     const memoryParams = {
-      id: memory.id,
-      title,
-      description,
-      tags: tagsToArray(tags)
+      ...memory,
+      fragments: fragments.map(({ identifier, ...params }) => params)
     }
     onSubmit(memoryParams)
       .then(redirectToMemoryUrl)
       .catch(showErrors)
   }
 
-  const tagsToArray = tags => {
-    return tags
-      .split(',')
-      .map(tag => tag.trim())
-      .filter(tag => tag !== '')
+  const showErrors = ({ errors }) => {
+    Object.keys(errors).forEach(errorAttribute => {
+      alertify.error(`${errorAttribute} ${errors[errorAttribute][0]}`)
+    })
   }
 
   const redirectToMemoryUrl = ({ memoryUrl }) => {
     window.location.replace(memoryUrl)
   }
 
-  const showErrors = ({ errors: requestErrors }) => {
-    const updatedErrors = Object.keys(errors).reduce((newErrors, errorKey) => {
-      const error = requestErrors[errorKey] ? requestErrors[errorKey][0] : false
-      return { ...newErrors, [errorKey]: error }
-    }, {})
-    setErrors(updatedErrors)
-  }
-
   return (
     <form className={classes.container} noValidate autoComplete="off">
       <TextField
         label='Title'
-        value={title}
+        value={memory.title}
         onChange={handleChange(setTitle)}
         className={classes.textField}
         margin='normal'
-        helperText={errors.title}
-        error={!!errors.title}
       />
       <DescriptionInput
-        value={description}
+        value={memory.description}
         setValue={setDescription}
       />
-      <FragmentsContainer/>
-      <TextField
-        label='Tags'
-        value={tags}
-        onChange={handleChange(setTags)}
-        className={classes.textField}
-        margin='normal'
+      <FragmentsContainer
+      />
+      <TagsInput
+        tags={memory.tags}
+        addTag={addTag}
+        removeTag={removeTag}
       />
       <Button
         onClick={triggerSubmit}
@@ -102,3 +90,18 @@ export default function Form({ onSubmit, memory = emptyMemory }) {
     </form>
   )
 }
+
+const mapStateToProps = ({ memories: state, fragments }) => {
+  return {
+    fragments,
+    memory: state.memory
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    editMemory: changes => dispatch(editMemory(changes))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form)

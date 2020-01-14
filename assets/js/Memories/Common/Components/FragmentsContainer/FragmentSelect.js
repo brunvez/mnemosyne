@@ -13,6 +13,9 @@ const fragmentTypes = {
 const defaultFragment = Object.keys(fragmentTypes)[0]
 
 const useStyles = makeStyles(theme => ({
+  container: {
+    margin: theme.spacing(1)
+  },
   formControl: {
     margin: theme.spacing(1),
     width: '100%'
@@ -21,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1),
     width: '100%'
   }
-}));
+}))
 
 export default function FragmentSelect({ onFragmentSelected }) {
   const classes = useStyles()
@@ -66,7 +69,11 @@ export default function FragmentSelect({ onFragmentSelected }) {
   }
 
   return (
-    <Grid justify='flex-end' spacing={2} container>
+    <Grid
+      className={classes.container}
+      justify='flex-end'
+      container
+    >
       <Grid lg={2} xs={12} item>
         <FormControl className={classes.formControl}>
           <InputLabel>Fragment Type</InputLabel>

@@ -7,5 +7,18 @@
 
 <%= raw parse_description @memory.description %>
 
-<strong>Tags:</strong>
-<%= enumerate_tags(@memory.tags) %>
+<div class="memory-fragments">
+  <h4><%= gettext("Memory links") %></h4>
+  <ul>
+    <%= for link <- @memory.fragments do %>
+    <li class="memory-link">
+      <%= link link.title || link.url, to: link.url %>    
+    </li>
+  <% end %>
+  </ul>
+</div>
+
+<%= if Enum.any?(@memory.tags) do %>
+  <strong>Tags:</strong>
+  <%= enumerate_tags(@memory.tags) %>
+<% end %>
