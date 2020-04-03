@@ -21,6 +21,16 @@ import selectizeCss from 'selectize/dist/css/selectize.css'
 //   render: h => h(App),
 // }).$mount('#app');
 
+import { Elm } from '../src/Main.elm'
+
+const elmContainer = document.getElementById('elmo')
+
+if (elmContainer) {
+  Elm.Main.init({
+    node: elmContainer
+  });
+}
+
 $(function () {
   $('#memory_tags').selectize({
     delimiter: ',',

@@ -1,3 +1,5 @@
+--var
+
 .input--inline {
   border: 0;
   border-bottom: 1px solid rgba(0, 0, 0, .15);
@@ -21,3 +23,95 @@ label {
 .validation-error {
   color: var(--error-color);
 }
+
+.input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--main-color);
+  outline: none;
+  padding: 6px 0;
+}
+
+.textarea {
+  width: 100%;
+  resize: none;
+  outline: none;
+  border: none;
+  resize: vertical;
+}
+
+.fieldset {
+  padding: 10px;
+}
+
+
+
+
+/* Memories */
+
+.fragemnts-section {
+  margin-top: 20px;
+}
+
+.fragment-select select {
+  height: 100%;
+  min-width: 100px;
+  margin: 0;
+  margin-right: 10px;
+}
+
+.fragment-select button {
+  margin: 0;
+}
+
+.tags-section {
+  padding: 10px;
+  align-items: center;
+  margin: 25px auto;
+  width: 95%;
+  box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+}
+
+.tags-section input {
+  margin: 0;
+  border: none;
+  margin: 10px;
+  outline: none;
+  flex-grow: 1;
+}
+
+.tags-section .tag {
+  color: rgba(0, 0, 0, 0.87);
+  border: none;
+  cursor: default;
+  height: 32px;
+  display: inline-flex;
+  font-size: 0.8125rem;
+  box-sizing: border-box;
+  transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  align-items: center;
+  white-space: nowrap;
+  border-radius: 16px;
+  vertical-align: middle;
+  justify-content: center;
+  text-decoration: none;
+  background-color: #e0e0e0;
+  margin: 4px;
+  min-width: 50px;
+  padding: 0 5px;
+ }
+
+ .tags-section .tag .tag-label {
+  padding: 0 5px;
+ }
+
+ .tags-section .tag .tag-remove {
+  vertical-align: middle;
+  display: inline-flex;
+  cursor: pointer;
+ }
+
+
+ .tags-section .tag .tag-remove:hover svg {
+  fill: var(--focus-color);
+ }
